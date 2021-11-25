@@ -69,5 +69,5 @@ def contact(request):
         context = {
             'contacts': json.load(contacts_file)
         }
-
+    context['title'] = 'контакты'
     return render(request, 'mainapp/contact.html', context)
