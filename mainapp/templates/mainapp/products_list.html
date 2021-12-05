@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block menu %}
-{{ same_product }}
 {% endblock %}
 
 {% block content %}
@@ -12,9 +11,7 @@
         </div>
     </div>
     <div class="details">
-        <div class="links clearfix">
             {% include 'mainapp/includes/inc_products_category.html' %}
-        </div>
 
         <div class="products_list">
             <div class="title clearfix">
