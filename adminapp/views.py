@@ -120,63 +120,71 @@ def category_delete(request, pk):
 
 @user_passes_test(lambda u: u.is_superuser)
 def products(request, pk):
+    category_item = get_object_or_404(ProductCategory, pk=pk)
     context = {
-        'object_list': Product.objects.filter(category__pk=pk)
+        'object_list': Product.objects.filter(category__pk=pk),
+        'category': category_item
     }
 
     return render(request, 'adminapp/products_list.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def product_create(request): pass  # не работает
-    # if request.method == 'POST':
-    #     form = ProductForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         form.save()
-    #         return HttpResponseRedirect(reverse('adminapp:products', ))
-    # else:
-    #     form = ProductForm()
-    # context = {
-    #     'form': form
-    # }
-    # return render(request, 'adminapp/product_form.html', context)
+def product_create(request, pk):
+    category_item = get_object_or_404(ProductCategory, pk=pk)
+
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES)
+        if product_form.is_valid():
+            product_item = product_form.save()
+            return HttpResponseRedirect(reverse('adminapp:products', args=[product_item.category.pk]))
+    else:
+        product_form = ProductForm()
+    context = {
+        'form': product_form,
+        'category': category_item
+    }
+    return render(request, 'adminapp/product_form.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def product_update(request, pk): pass  # некорректно работает - выбрасывает на создание
-    # product_item = get_object_or_404(Product, pk=pk)
-    # if request.method == 'POST':
-    #     form = ProductForm(request.POST, instance=product_item)
-    #     if form.is_valid():
-    #         form.save()
-    #         return HttpResponseRedirect(f'/admin/products/{product_item.category_id}')
-    # else:
-    #     form = ProductCategoryForm(instance=product_item)
-    # context = {
-    #     'form': form
-    # }
-    # return render(request, 'adminapp/category_form.html', context)
+def product_update(request, pk):
+    product_item = get_object_or_404(Product, pk=pk)
+
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES, instance=product_item)
+        if product_form.is_valid():
+            product_item = product_form.save()
+            return HttpResponseRedirect(reverse('adminapp:products', args=[product_item.category.pk]))
+    else:
+        product_form = ProductForm(instance=product_item)
+    context = {
+        'form': product_form,
+        'category': product_item.category
+    }
+    return render(request, 'adminapp/product_form.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def product_delete(request, pk): pass  # работает!!!
-    # product_item = get_object_or_404(Product, pk=pk)
-    #
-    # if request.method == 'POST':
-    #     product_item.is_active = False
-    #     product_item.save()
-    #     return HttpResponseRedirect(f'/admin/products/{product_item.category_id}')
-    #
-    # context = {
-    #     'object': product_item
-    # }
-    # return render(request, 'adminapp/product_delete.html', context)
+def product_delete(request, pk):
+    product_item = get_object_or_404(Product, pk=pk)
+
+    if request.method == 'POST':
+        product_item.is_active = False
+        product_item.save()
+        return HttpResponseRedirect(reverse('adminapp:products', args=[
+            product_item.category.pk]))  # (f'/admin/products/{product_item.category_id}') bez reverse
+
+    context = {
+        'object': product_item
+    }
+    return render(request, 'adminapp/product_delete.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def product_read(request, pk): pass   # работает
-    # product_item = get_object_or_404(Product, pk=pk)
-    # context = {
-    #     'product_item': product_item
-    # }
-    # return render(request, 'adminapp/product_form_read.html', context)
+def product_read(request, pk):
+    product_item = get_object_or_404(Product, pk=pk)
+    context = {
+        'object': product_item
+    }
+    return render(request, 'adminapp/product_read.html', context)
