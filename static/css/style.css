@@ -304,7 +304,7 @@ html, body {
 .user_record img {
     display: block;
     float: left;
-    height: 125px;
+    max-height: 125px;
     border-radius: 25px;
 }
 
@@ -619,7 +619,7 @@ html, body {
 }
 
 .user_avatar img {
-    width: 300px;
+    max-width: 300px;
     border-radius: 25px;
 }
 
