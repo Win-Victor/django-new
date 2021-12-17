@@ -619,7 +619,6 @@ html, body {
 }
 
 .user_avatar img {
-    max-width: 300px;
     border-radius: 25px;
 }
 
