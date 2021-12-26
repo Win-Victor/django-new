@@ -1,0 +1,20 @@
+[
+  {
+    "city": "Москва",
+    "phone": "+7(495)000-00-00",
+    "email": "info@geekshop.ru",
+    "address": "3-я ул. Строителей"
+  },
+  {
+    "city": "Ленинград",
+    "phone": "+7(812)000-00-00",
+    "email": "info@geekshop.ru",
+    "address": "3-я ул. Строителей"
+  },
+  {
+    "city": "Воронеж",
+    "phone": "+7(473)000-00-00",
+    "email": "info@geekshop.ru",
+    "address": "3-я ул. Строителей"
+  }
+]
