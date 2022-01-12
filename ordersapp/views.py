@@ -1,5 +1,6 @@
 from django.db import transaction
 from django.forms import inlineformset_factory
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView
@@ -11,6 +12,9 @@ from ordersapp.models import Order, OrderItem
 
 class OrderListView(ListView):
     model = Order
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
 
 
 class OrderCreateView(CreateView):
@@ -32,7 +36,6 @@ class OrderCreateView(CreateView):
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = basket_items[num].product
                     form.initial['quantity'] = basket_items[num].quantity
-                # basket_items.delete()
             else:
                 formset = OrderFormSet()
 
@@ -50,6 +53,9 @@ class OrderCreateView(CreateView):
             if orderitems.is_valid():
                 orderitems.instance = self.object
                 orderitems.save()
+
+            basket_items = Basket.objects.filter(user=self.request.user)
+            basket_items.delete()
 
         if self.object.get_total_cost() == 0:
             self.object.delete()
@@ -92,12 +98,18 @@ class OrderUpdateView(UpdateView):
 
 
 class OrderDetailView(DetailView):
-    pass
+    model = Order
 
 
 class OrderDeleteView(DeleteView):
-    pass
+    model = Order
+    success_url = reverse_lazy('ordersapp:list')
 
 
 def complete(request, pk):
-    pass
+    order_item = Order.objects.get(pk=pk)
+    order_item.status = Order.STATUS_SEND_TO_PROCEED
+    order_item.save()
+
+    return HttpResponseRedirect(reverse('ordersapp:list'))  # return redirect(OrderListView.as_view())
+
