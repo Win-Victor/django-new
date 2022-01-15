@@ -34,6 +34,18 @@ window.onload = function () {
         $('.order_total_cost').html(Number(order_total_cost.toFixed(2)).toString());
     }
 
+    $('.order_form').on('click', 'input[type="checkbox"]', function () {
+        var target = event.target;
+        orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
+
+        if(target.checked) {
+            delta_quantity = -quantity_arr[orderitem_num];
+        } else {
+            delta_quantity = quantity_arr[orderitem_num];
+        }
+        orderSummaryUpdate(price_arr[orderitem_num], delta_quantity);
+    });
+
     $('.order_form').on('click', 'input[type="number"]', function () {
         var target = event.target;
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
@@ -97,10 +109,10 @@ window.onload = function () {
         $('.order_total_quantity').html(order_total_quantity.toString());
     }
 
-    $('.formset_row').formset({
-        addText: 'добавить продукт',
-        deleteText: 'удалить',
-        prefix: 'orderitems',
-        removed: deleteOrderItem
-    });
+    // $('.formset_row').formset({
+    //     addText: 'добавить продукт',
+    //     deleteText: 'удалить',
+    //     prefix: 'orderitems',
+    //     removed: deleteOrderItem
+    // });
 }
