@@ -5,3 +5,4 @@ venv/
 env/
 .env
 vk.json
+db.sqlite3
