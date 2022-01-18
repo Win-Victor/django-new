@@ -71,7 +71,7 @@ window.onload = function () {
 
 
     // $('.order_form select').change(function () {
-    $('.order_form select').on('change', 'select', function () {
+    $('.order_form').on('change', 'select', function () {
         console.log('!!!!')
         var target = event.target;
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
