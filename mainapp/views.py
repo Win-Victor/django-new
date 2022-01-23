@@ -28,7 +28,7 @@ def get_same_products(hot_product):
 
 
 def index(request):
-    products_list = Product.objects.all().select_related()[:4]  # filter(is_active=True)
+    products_list = Product.objects.filter(is_active=True).select_related()[:4]
 
     context = {
         'title': 'магазин',
