@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from datetime import datetime
 
 from django.conf import settings
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page, never_cache
 
 from basketapp.models import Basket
 from mainapp.models import Product, ProductCategory
@@ -52,7 +52,7 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-@cache_page(3600)
+@never_cache
 def products(request, pk=None, page=1):
     links_menu = get_links_menu()
 
