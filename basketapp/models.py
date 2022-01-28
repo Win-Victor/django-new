@@ -1,4 +1,3 @@
-from cryptography.utils import cached_property
 from django.conf import settings
 from django.db import models
 
@@ -22,24 +21,20 @@ class Basket(models.Model):
     quantity = models.PositiveSmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    @cached_property
-    def get_items_cached(self):
-        return Basket.objects.filter(user=self.user).select_related()
-
     @property
     def product_cost(self):
         return self.product.price * self.quantity
 
-    # @property
+    @property
     def total_quantity(self):
-        _items = self.get_items_cached
-        _total_quantity = sum(list(map(lambda x: x.quantity, _items)))
+        items = Basket.objects.filter(user=self.user)
+        _total_quantity = sum(list(map(lambda x: x.quantity, items)))
         return _total_quantity
 
-    # @property
+    @property
     def total_cost(self):
-        _items = self.get_items_cached
-        _total_cost = sum(list(map(lambda x: x.product_cost, _items)))
+        items = Basket.objects.filter(user=self.user)
+        _total_cost = sum(list(map(lambda x: x.product_cost, items)))
         return _total_cost
 
     @staticmethod
