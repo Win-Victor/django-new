@@ -1,5 +1,5 @@
 {% extends 'ordersapp/base.html' %}
-
+{% load cache %}
 {% block content %}
     {% include 'ordersapp/includes/inc_order_summary.html' %}
     <div class="order_form">
@@ -29,21 +29,29 @@
                                     {% endfor %}
                                 {% endif %}
                                 {{ field.errors.as_ul }}
-                            {% if field.name == 'price' %}
-                                {% if field.value %}
-                                <span class="orderitems-{{ forloop.parentloop.counter0 }}-price">
+                                {% if field.name == 'price' %}
+                                    {% if field.value %}
+                                        <span class="orderitems-{{ forloop.parentloop.counter0 }}-price">
                                 {{ field.value }}
                                 </span> руб.
                                     {% endif %}
-                            {% else %}
-                                {{ field }}
-                            {% endif %}
+                                {% else %}
+                                    {% if field.name == 'product' %}
+                                        {% cache 3600 orderitemform_product field.value %}
+                                            {{ field }}
+                                        {% endcache %}
+                                    {% else %}
+                                        {{ field }}
+                                    {% endif %}
+                                {% endif %}
                             </td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
             </table>
-            <button type="submit" class="btn btn-primary btn-round form-control last" style="margin-bottom: 10px">Сохранить</button>
+            <button type="submit" class="btn btn-primary btn-round form-control last" style="margin-bottom: 10px">
+                Сохранить
+            </button>
         </form>
     </div>
     {% include 'ordersapp/includes/inc_order_actions.html' %}
