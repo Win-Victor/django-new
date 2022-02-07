@@ -20,10 +20,10 @@ class Command(BaseCommand):
         action_2_discount = 0.15
         action_3_discount = 0.05
 
-        action_1_condition = Q(order__update_at__lte=F('order_create__at') + action_1_timedelta)
-        action_2_condition = Q(order__update_at__gt=F('order_create__at') + action_1_timedelta) & \
-                             Q(order__update_at__lte=F('order_create__at') + action_2_timedelta)
-        action_3_condition = Q(order__update_at__gt=F('order_create__at') + action_2_timedelta)
+        action_1_condition = Q(order__update_at__lte=F('order_created__at') + action_1_timedelta)
+        action_2_condition = Q(order__update_at__gt=F('order_created__at') + action_1_timedelta) & \
+                             Q(order__update_at__lte=F('order_created__at') + action_2_timedelta)
+        action_3_condition = Q(order__update_at__gt=F('order_created__at') + action_2_timedelta)
 
         action_1_order = When(action_1_condition, then=action_1)
         action_2_order = When(action_2_condition, then=action_2)
