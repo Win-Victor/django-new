@@ -45,7 +45,7 @@ class Command(BaseCommand):
                 action_1_price,
                 action_2_price,
                 action_3_price,
-                output_field=DecimalField
+                output_field=DecimalField()
             )
         ).order_by('action_order', 'total_price').select_related()
 
