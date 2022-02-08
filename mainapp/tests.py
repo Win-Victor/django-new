@@ -21,7 +21,7 @@ class MainappSmokeTest(TestCase):
 
     def test_mainapp_urls(self):
         response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 305)
 
     def tearDown(self) -> None:
         pass
