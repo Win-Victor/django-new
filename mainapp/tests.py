@@ -1,3 +1,27 @@
 from django.test import TestCase
+# from django.test.client import Client
+from mainapp.models import Product, ProductCategory
 
-# Create your tests here.
+
+class MainappSmokeTest(TestCase):
+
+    def setUp(self) -> None:
+        category = ProductCategory.objects.create(
+            name='cat1'
+        )
+        for i in range(10):
+            Product.objects.create(
+                category=category,
+                name=f'prod #{i}',
+                description=f'description fof prod #{i}'
+            )
+
+        # self.client = Client()
+
+
+    def test_mainapp_urls(self) -> None:
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self) -> None:
+        pass

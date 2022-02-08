@@ -51,5 +51,5 @@ class Command(BaseCommand):
 
         for item in orderitem_items:
             print(
-                f'{item.action_order: 2} order: #{item.pk:3} discount: {item.total_price:6.2f} product: {item.product.name} '
-                f'{item.order.updated_at - item.order.created_at}')
+                f'{item.action_order: 2} order: #{item.pk:3} discount: {item.total_price:6.2f} product: '
+                f'{item.product.name} {item.order.updated_at - item.order.created_at}')
