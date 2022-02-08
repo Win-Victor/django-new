@@ -13,13 +13,13 @@ class MainappSmokeTest(TestCase):
             Product.objects.create(
                 category=category,
                 name=f'prod #{i}',
-                description=f'description fof prod #{i}'
+                description=f'description for prod #{i}'
             )
 
         # self.client = Client()
 
 
-    def test_mainapp_urls(self) -> None:
+    def test_mainapp_urls(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
