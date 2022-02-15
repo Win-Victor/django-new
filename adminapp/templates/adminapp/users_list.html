@@ -9,7 +9,7 @@
             <div class="user_record" {% if not item.is_active %}style="opacity: 0.5"{% endif %}>
                 <div class="user_avatar">
 {#                    <img src="/media/{{ item.avatar|default:'users/images.jfif' }}"  alt="avatar">#}
-                    <img src="{{ item.avatar|media_for_users }}"  alt="avatar">
+                    <img src="{{ item.avatar|media_for_users }}" style="max-width: 125px" alt="avatar">
                 </div>
                 <div class="user_role">
                     {% if item.is_superuser %}

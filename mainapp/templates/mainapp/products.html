@@ -13,7 +13,7 @@
         <div class="details-products">
             <div class="details-slider">
                 <div class="slider-product">
-                    <img src="/media/{{ hot_product.image }}" width="570px" height="400px " alt="">
+                    <img src="/media/{{ hot_product.image }}" max-width="400px" height="400px " alt="">
                 </div>
                 <div class="slider-control">
                     <div class="block">
@@ -55,7 +55,7 @@
             <div class="related-products clearfix">
                 {% for product in same_products %}
                 <div class="block">
-                    <a href="{% url 'basketapp:basket_add' product.pk %}"><img src="/media/{{ product.image }}" alt="">
+                    <a href="{% url 'basketapp:basket_add' product.pk %}"><img src="/media/{{ product.image }}" style="max-width: 400px" alt="">
                         <div class="text">
                             <img src="{% static 'img/icon-hover.png' %}" alt="img">
                             <h4>{{ product.name }}</h4>
