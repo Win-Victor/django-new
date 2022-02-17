@@ -1,0 +1,11 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Account verify
+From: django@gb.local
+To: win-victor@mail.ru
+Date: Mon, 27 Dec 2021 16:53:34 -0000
+Message-ID: <164062401442.7092.2843400096979981001@WIN-T1PK87JSISO>
+
+http://localhost:8000/auth/verify/win-victor@mail.ru/b232fe85a714df0d9512d4954164c992825c12b0
+-------------------------------------------------------------------------------
